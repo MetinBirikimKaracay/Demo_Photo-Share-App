@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "943449807713",
+    "project_id": "authuygulama",
+    "storage_bucket": "authuygulama.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:943449807713:android:061208dc7692bda21b0320",
+        "android_client_info": {
+          "package_name": "com.example.authuygulama"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "943449807713-nv6kkn3o1gtojdokl6qsfhl8gmkftg6r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.authuygulama",
+            "certificate_hash": "fa685f75c1db73e9ab4f4a07f48e440584013ea3"
+          }
+        },
+        {
+          "client_id": "943449807713-0a0tm7201343ulu4238jeoglvg7lses8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFcbdDBdclU7pAVDMBcZ-Ea2F9zRvZ2x8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "943449807713-0a0tm7201343ulu4238jeoglvg7lses8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
