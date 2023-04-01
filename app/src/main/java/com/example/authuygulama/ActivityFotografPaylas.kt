@@ -15,6 +15,7 @@ import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.authuygulama.databinding.ActivityFotografPaylasBinding
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -71,7 +72,49 @@ class ActivityFotografPaylas : AppCompatActivity() {
         if(secilenGorsel != null){
 
             gorselReferans.putFile(secilenGorsel!!).addOnSuccessListener {
-                Toast.makeText(this,"Paylaşım Başarılı",Toast.LENGTH_LONG).show()
+                //Toast.makeText(this,"Paylaşım Başarılı",Toast.LENGTH_LONG).show()
+
+                //Az önce Storage'a attığımız görselin URL'sini alıyoruz. Başarılı olursa aşağıdaki işlemler gerçekleşiyor
+                referans.child("images").child(secilenIsim).downloadUrl.addOnSuccessListener {
+                    //Database'e kaydetmek için gereken parametreleri alıyoruz
+
+                    val gorselUri = it.toString()
+                    val kullaniciEmail = auth.currentUser!!.email.toString()
+                    val aciklama = binding.etAciklama.text.toString()
+                    //Güncel tarihi almak için Firebase'in kendi fonksiyonunu seçiyoruz yani com.google.firebase seçilmeli!
+                    val tarih = Timestamp.now()
+
+                    //Database işlemleri
+
+                    //Burayı hatırlamak için 4.14 videosunu 6.dkdan itibaren izle
+                    val postHashMap = hashMapOf<String, Any>()
+                    postHashMap.put("GorselURL",gorselUri)
+                    postHashMap.put("Email",kullaniciEmail)
+                    postHashMap.put("Aciklama",aciklama)
+                    postHashMap.put("Tarih",tarih)
+
+                    //Post adında bir veritabanı tablosu oluşturup içine verileri gönderdik.
+                    database.collection("Post").add(postHashMap).addOnSuccessListener {
+
+                        //Feed'ten intent ile buraya gelirken finish yapmadığımız için orası hala açık
+                        //o yüzden tekrar intent ile sayfa geçişi vermeye gerek yok
+                        Toast.makeText(this,"Paylaşım Başarılı",Toast.LENGTH_LONG).show()
+                        finish()
+
+                    }.addOnFailureListener {
+
+                        Toast.makeText(this,it.localizedMessage,Toast.LENGTH_LONG).show()
+                        println(it.localizedMessage)
+
+                    }
+
+
+                }.addOnFailureListener {
+                    Toast.makeText(this,it.localizedMessage,Toast.LENGTH_LONG).show()
+                }
+
+
+
             }.addOnFailureListener {
                 Toast.makeText(this,it.localizedMessage,Toast.LENGTH_LONG).show()
             }
